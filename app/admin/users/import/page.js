@@ -1,7 +1,6 @@
 "use client";
 import React, { useState } from 'react';
-import Layout from '../../../components/Layout';
-import Papa from 'papaparse';
+import Layout from '@/components/Layout';
 
 export default function ImportUsers() {
     const [file, setFile] = useState(null);
@@ -9,9 +8,11 @@ export default function ImportUsers() {
     const [log, setLog] = useState([]);
     const [importing, setImporting] = useState(false);
 
-    function handleFile(e) {
+    async function handleFile(e) {
         const f = e.target.files[0];
         setFile(f);
+
+        const Papa = (await import('papaparse')).default;
         Papa.parse(f, {
             header: true,
             complete: (results) => {
@@ -25,6 +26,7 @@ export default function ImportUsers() {
         setImporting(true);
         setLog([]);
 
+        const Papa = (await import('papaparse')).default;
         Papa.parse(file, {
             header: true,
             step: async (row) => {
@@ -57,6 +59,7 @@ export default function ImportUsers() {
             }
         });
     }
+
 
     return (
         <Layout>
