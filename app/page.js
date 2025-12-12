@@ -12,6 +12,7 @@ export default async function Home() {
         <h1 className="text-4xl font-bold mb-8 text-white tracking-tight animate-enter">
           Discover <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-emerald-400">Competitions</span>
         </h1>
+        <p className="text-lg text-white mb-8 animate-enter">Explore a wide range of competitions and events happening around the world.</p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {competitions.map((c) => (
             <CompetitionCard key={c.id} comp={c} />
