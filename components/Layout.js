@@ -11,7 +11,7 @@ export default function Layout({ children }) {
 
       <div className="relative z-10 min-h-screen flex flex-col">
         <Nav />
-        <main className="container mx-auto px-4 py-8 flex-grow animate-enter">
+        <main className="container mx-auto px-6 flex-grow">
           {children}
         </main>
         <footer className="text-center py-6 text-sm text-slate-400 glass border-t-0 border-b-0 border-x-0 !bg-transparent">

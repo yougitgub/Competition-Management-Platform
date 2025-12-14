@@ -16,6 +16,7 @@ import { logout } from '@/actions/auth-actions';
 const links = [
     { name: 'Dashboard', href: '/admin/dashboard', icon: LayoutDashboard },
     { name: 'Competitions', href: '/admin/competitions', icon: Trophy },
+    { name: 'Teams', href: '/admin/teams', icon: Users },
     { name: 'Registrations', href: '/admin/registrations', icon: ClipboardList },
     { name: 'Results', href: '/admin/results', icon: Award },
     { name: 'Users', href: '/admin/users', icon: Users },

@@ -58,6 +58,7 @@ export async function joinTeam(teamId) {
         await team.save();
 
         revalidatePath(`/dashboard`);
+        revalidatePath(`/dashboard/teams`);
         return { success: "Join request sent to team leader" };
     } catch (e) {
         console.error('joinTeam error:', e.message);
@@ -91,6 +92,7 @@ export async function handleJoinRequest(teamId, userId, action) {
 
         await team.save();
         revalidatePath('/dashboard/teams');
+        revalidatePath('/dashboard/teams/my-team');
         return { success: `Request ${action}ed` };
     } catch (e) {
         console.error('handleJoinRequest error:', e.message);
@@ -104,6 +106,8 @@ export async function getTeams(competitionId = null) {
         const query = competitionId ? { competition: competitionId } : {};
         const teams = await Team.find(query)
             .populate('members', 'name email')
+            .populate('joinRequests', 'name email')
+            .populate('leader', 'name email')
             .populate('competition', 'title');
         return JSON.parse(JSON.stringify(teams));
     } catch (e) {
@@ -116,14 +120,10 @@ export async function getMyTeam() {
     if (!session) return null;
     try {
         await dbConnect();
-        // Find teams where user is a member
-        // For simplicity returning the first one or we could return all
-        // Assuming student can be in multiple teams (one per comp), but for "My Team" usually implies primary or list.
-        // Let's return the list of teams the user is part of.
-        // Wait, 'getMyTeam' implies singular. Let's return array 'getMyTeams'.
         const teams = await Team.find({ members: session.user.id })
             .populate('members', 'name email')
             .populate('joinRequests', 'name email')
+            .populate('leader', 'name email')
             .populate('competition', 'title');
         return JSON.parse(JSON.stringify(teams));
     } catch (e) {
@@ -155,5 +155,60 @@ export async function cancelJoinRequest(teamId) {
     } catch (e) {
         console.error('cancelJoinRequest error:', e.message);
         return { error: "Failed to cancel request" };
+    }
+}
+
+export async function leaveTeam(teamId) {
+    const session = await auth();
+    if (!session) return { error: "Unauthorized" };
+
+    try {
+        await dbConnect();
+        const team = await Team.findById(teamId);
+        if (!team) return { error: "Team not found" };
+
+        const userId = session.user.id;
+
+        // Check if user is the leader
+        if (team.leader.toString() === userId) {
+            return { error: "Team leader cannot leave the team. Please delete the team or transfer leadership first." };
+        }
+
+        // Check if user is a member
+        if (!team.members.some(m => m.toString() === userId)) {
+            return { error: "You are not a member of this team" };
+        }
+
+        // Remove from members
+        team.members = team.members.filter(id => id.toString() !== userId);
+        await team.save();
+
+        revalidatePath('/dashboard/teams');
+        revalidatePath('/dashboard/teams/my-team');
+        return { success: "Successfully left the team" };
+    } catch (e) {
+        console.error('leaveTeam error:', e.message);
+        return { error: "Failed to leave team" };
+    }
+}
+
+export async function getAllTeamsAdmin() {
+    const session = await auth();
+    if (!session || session.user.role !== 'admin') {
+        return { error: 'Unauthorized' };
+    }
+
+    try {
+        await dbConnect();
+        const teams = await Team.find({})
+            .populate('members', 'name email role')
+            .populate('joinRequests', 'name email')
+            .populate('leader', 'name email')
+            .populate('competition', 'title')
+            .sort({ createdAt: -1 });
+        return JSON.parse(JSON.stringify(teams));
+    } catch (e) {
+        console.error('getAllTeamsAdmin error:', e.message);
+        return [];
     }
 }

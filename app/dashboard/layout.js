@@ -12,7 +12,7 @@ export default async function Layout({ children }) {
             </div>
 
             <Nav />
-            <main className="container mx-auto px-4 py-8 flex-grow animate-enter">
+            <main className="container mx-auto px-6 py-24 flex-grow">
                 {children}
             </main>
             <footer className="text-center py-6 text-sm text-slate-400 border-t border-white/5 mx-auto w-full max-w-7xl">
