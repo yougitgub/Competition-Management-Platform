@@ -1,5 +1,6 @@
 'use client';
 import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
 
 export default function Nav() {
   const [user, setUser] = useState(null);
@@ -32,39 +33,39 @@ export default function Nav() {
     <nav className={`sticky top-0 z-50 transition-all duration-300 ${scrolled ? 'py-4' : 'py-6'}`}>
       <div className={`container mx-auto px-6 transition-all duration-300 ${scrolled ? 'max-w-7xl' : ''}`}>
         <div className="glass rounded-full px-6 py-3 flex items-center justify-between shadow-2xl backdrop-blur-md bg-white/5 border border-white/10">
-          <a href="/" className="text-xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent hover:opacity-80 transition-opacity">
+          <Link href="/" className="text-xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent hover:opacity-80 transition-opacity">
             School Competitions
-          </a>
+          </Link>
 
           <div className="flex items-center gap-6">
-            <a href="/competitions" className="text-sm font-medium text-slate-300 hover:text-white hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] transition-all">
+            <Link href="/competitions" className="text-sm font-medium text-slate-300 hover:text-white hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] transition-all">
               Competitions
-            </a>
-            <a href="/results" className="text-sm font-medium text-slate-300 hover:text-white hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] transition-all">
+            </Link>
+            <Link href="/results" className="text-sm font-medium text-slate-300 hover:text-white hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] transition-all">
               Results
-            </a>
+            </Link>
 
             {!loading && (
               <>
                 {!user ? (
                   <>
-                    <a href="/login" className="text-sm font-medium text-slate-300 hover:text-white hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] transition-all">
+                    <Link href="/login" className="text-sm font-medium text-slate-300 hover:text-white hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] transition-all">
                       Login
-                    </a>
-                    <a href="/admin/login" className="text-sm font-medium text-slate-300 hover:text-white hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] transition-all">
+                    </Link>
+                    <Link href="/admin/login" className="text-sm font-medium text-slate-300 hover:text-white hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] transition-all">
                       Admin
-                    </a>
+                    </Link>
                   </>
                 ) : (
                   <>
                     {user.role === 'admin' ? (
-                      <a href="/admin/dashboard" className="text-sm font-medium text-slate-300 hover:text-white hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] transition-all">
+                      <Link href="/admin/dashboard" className="text-sm font-medium text-slate-300 hover:text-white hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] transition-all">
                         Admin Dashboard
-                      </a>
+                      </Link>
                     ) : (
-                      <a href="/dashboard" className="text-sm font-medium text-slate-300 hover:text-white hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] transition-all">
+                      <Link href="/dashboard" className="text-sm font-medium text-slate-300 hover:text-white hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] transition-all">
                         Dashboard
-                      </a>
+                      </Link>
                     )}
                     <button
                       onClick={logout}

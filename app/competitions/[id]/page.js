@@ -1,7 +1,6 @@
 import React from 'react';
 import Layout from '@/components/Layout';
 import RegisterForm from '@/components/RegisterForm';
-import { getCompetition } from '@/lib/db';
 
 export default async function CompetitionPage({ params }) {
   const unwrappedParams = await params;
@@ -16,7 +15,7 @@ export default async function CompetitionPage({ params }) {
     <Layout>
       <div className="glass-panel p-8 animate-enter">
         <div className="border-b border-white/10 pb-6 mb-6">
-          <h1 className="text-4xl font-bold bg-gradient-to-r from-white to-slate-400 bg-clip-text text-transparent mb-4">{c.title}</h1>
+          <h1 className="text-4xl font-bold bg-linear-to-r from-white to-slate-400 bg-clip-text text-transparent mb-4">{c.title}</h1>
           <p className="text-lg text-slate-300 leading-relaxed">{c.description}</p>
         </div>
 
