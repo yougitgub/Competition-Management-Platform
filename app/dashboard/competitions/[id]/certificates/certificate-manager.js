@@ -47,48 +47,50 @@ export default function CertificateManager({ competition, participants, results 
         <div>
             {/* List */}
             <div className="glass-panel overflow-hidden">
-                <table className="w-full text-left">
-                    <thead className="bg-white/5 text-slate-300 text-sm uppercase">
-                        <tr>
-                            <th className="p-4">Participant</th>
-                            <th className="p-4">Email / Info</th>
-                            <th className="p-4">Rank</th>
-                            <th className="p-4 text-right">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody className="divide-y divide-white/5">
-                        {participants.map((p) => {
-                            const pid = competition.type === 'team' ? p.team?._id : p.user?._id;
-                            const name = competition.type === 'team' ? p.team?.name : p.user?.name;
-                            const email = competition.type === 'team' ? `${p.team?.members?.length || 0} Members` : p.user?.email;
-                            const rank = getRank(pid);
+                <div className="overflow-x-auto">
+                    <table className="w-full text-left">
+                        <thead className="bg-white/5 text-slate-300 text-sm uppercase">
+                            <tr>
+                                <th className="p-4">Participant</th>
+                                <th className="p-4">Email / Info</th>
+                                <th className="p-4">Rank</th>
+                                <th className="p-4 text-right">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody className="divide-y divide-white/5">
+                            {participants.map((p) => {
+                                const pid = competition.type === 'team' ? p.team?._id : p.user?._id;
+                                const name = competition.type === 'team' ? p.team?.name : p.user?.name;
+                                const email = competition.type === 'team' ? `${p.team?.members?.length || 0} Members` : p.user?.email;
+                                const rank = getRank(pid);
 
-                            return (
-                                <tr key={p._id} className="hover:bg-white/5 transition-colors">
-                                    <td className="p-4 font-medium text-white">{name}</td>
-                                    <td className="p-4 text-slate-400">{email}</td>
-                                    <td className="p-4 text-slate-400">
-                                        {rank ? <span className="text-yellow-400 font-bold">#{rank}</span> : '-'}
-                                    </td>
-                                    <td className="p-4 text-right">
-                                        <Button
-                                            variant="outline"
-                                            size="sm"
-                                            onClick={() => handlePreview(p)}
-                                            className="gap-2"
-                                        >
-                                            <FileText className="w-4 h-4" />
-                                            Certificate
-                                        </Button>
-                                    </td>
-                                </tr>
-                            );
-                        })}
-                        {participants.length === 0 && (
-                            <tr><td colSpan="4" className="p-8 text-center text-slate-400">No participants found.</td></tr>
-                        )}
-                    </tbody>
-                </table>
+                                return (
+                                    <tr key={p._id} className="hover:bg-white/5 transition-colors">
+                                        <td className="p-4 font-medium text-white">{name}</td>
+                                        <td className="p-4 text-slate-400">{email}</td>
+                                        <td className="p-4 text-slate-400">
+                                            {rank ? <span className="text-yellow-400 font-bold">#{rank}</span> : '-'}
+                                        </td>
+                                        <td className="p-4 text-right">
+                                            <Button
+                                                variant="outline"
+                                                size="sm"
+                                                onClick={() => handlePreview(p)}
+                                                className="gap-2"
+                                            >
+                                                <FileText className="w-4 h-4" />
+                                                Certificate
+                                            </Button>
+                                        </td>
+                                    </tr>
+                                );
+                            })}
+                            {participants.length === 0 && (
+                                <tr><td colSpan="4" className="p-8 text-center text-slate-400">No participants found.</td></tr>
+                            )}
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
             {/* Preview Modal */}

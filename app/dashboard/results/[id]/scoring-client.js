@@ -83,44 +83,46 @@ export default function ScoringClient({ id, isAdmin }) {
     const ResultsTable = () => (
         <div className="space-y-8">
             <div className="glass-panel overflow-hidden">
-                <table className="w-full text-left">
-                    <thead className="bg-white/5 text-slate-300 text-sm uppercase">
-                        <tr>
-                            <th className="p-4">Rank</th>
-                            <th className="p-4">Participant</th>
-                            <th className="p-4">Score</th>
-                            <th className="p-4">Status</th>
-                        </tr>
-                    </thead>
-                    <tbody className="divide-y divide-white/5">
-                        {existingResults.length === 0 ? (
-                            <tr><td colSpan="4" className="p-8 text-center text-slate-400">No results found.</td></tr>
-                        ) : (
-                            existingResults.map((r) => (
-                                <tr key={r._id} className="hover:bg-white/5 transition-colors">
-                                    <td className="p-4 flex items-center gap-2">
-                                        {r.position === 1 && <Trophy className="w-5 h-5 text-yellow-400" />}
-                                        {r.position === 2 && <Trophy className="w-5 h-5 text-gray-400" />}
-                                        {r.position === 3 && <Trophy className="w-5 h-5 text-amber-600" />}
-                                        <span className={r.position <= 3 ? "font-bold text-white" : "text-slate-300"}>
-                                            {r.position}
-                                        </span>
-                                    </td>
-                                    <td className="p-4 font-medium text-white">
-                                        {competition.type === 'team' ? r.team?.name : r.user?.name}
-                                    </td>
-                                    <td className="p-4 text-blue-400 font-bold">{r.score}</td>
-                                    <td className="p-4 text-xs">
-                                        {r.published ?
-                                            <span className="text-green-400 border border-green-500/30 px-2 py-1 rounded bg-green-500/10">Published</span> :
-                                            <span className="text-yellow-400 border border-yellow-500/30 px-2 py-1 rounded bg-yellow-500/10">Draft</span>
-                                        }
-                                    </td>
-                                </tr>
-                            ))
-                        )}
-                    </tbody>
-                </table>
+                <div className="overflow-x-auto">
+                    <table className="w-full text-left">
+                        <thead className="bg-white/5 text-slate-300 text-sm uppercase">
+                            <tr>
+                                <th className="p-4">Rank</th>
+                                <th className="p-4">Participant</th>
+                                <th className="p-4">Score</th>
+                                <th className="p-4">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody className="divide-y divide-white/5">
+                            {existingResults.length === 0 ? (
+                                <tr><td colSpan="4" className="p-8 text-center text-slate-400">No results found.</td></tr>
+                            ) : (
+                                existingResults.map((r) => (
+                                    <tr key={r._id} className="hover:bg-white/5 transition-colors">
+                                        <td className="p-4 flex items-center gap-2">
+                                            {r.position === 1 && <Trophy className="w-5 h-5 text-yellow-400" />}
+                                            {r.position === 2 && <Trophy className="w-5 h-5 text-gray-400" />}
+                                            {r.position === 3 && <Trophy className="w-5 h-5 text-amber-600" />}
+                                            <span className={r.position <= 3 ? "font-bold text-white" : "text-slate-300"}>
+                                                {r.position}
+                                            </span>
+                                        </td>
+                                        <td className="p-4 font-medium text-white">
+                                            {competition.type === 'team' ? r.team?.name : r.user?.name}
+                                        </td>
+                                        <td className="p-4 text-blue-400 font-bold">{r.score}</td>
+                                        <td className="p-4 text-xs">
+                                            {r.published ?
+                                                <span className="text-green-400 border border-green-500/30 px-2 py-1 rounded bg-green-500/10">Published</span> :
+                                                <span className="text-yellow-400 border border-yellow-500/30 px-2 py-1 rounded bg-yellow-500/10">Draft</span>
+                                            }
+                                        </td>
+                                    </tr>
+                                ))
+                            )}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     );
@@ -185,61 +187,63 @@ export default function ScoringClient({ id, isAdmin }) {
             ) : (
                 <>
                     <div className="glass-panel overflow-hidden">
-                        <table className="w-full text-left">
-                            <thead className="bg-white/5 text-slate-300 text-sm uppercase">
-                                <tr>
-                                    <th className="p-4">Rank</th>
-                                    <th className="p-4">Participant</th>
-                                    <th className="p-4">Score</th>
-                                    <th className="p-4">Position</th>
-                                    <th className="p-4 text-right">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody className="divide-y divide-white/5">
-                                {participants.map(p => {
-                                    const pid = competition.type === 'team' ? p.team?._id : p.user?._id;
-                                    const name = competition.type === 'team' ? p.team?.name : p.user?.name;
-                                    const current = scores[pid] || {};
+                        <div className="overflow-x-auto">
+                            <table className="w-full text-left">
+                                <thead className="bg-white/5 text-slate-300 text-sm uppercase">
+                                    <tr>
+                                        <th className="p-4">Rank</th>
+                                        <th className="p-4">Participant</th>
+                                        <th className="p-4">Score</th>
+                                        <th className="p-4">Position</th>
+                                        <th className="p-4 text-right">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody className="divide-y divide-white/5">
+                                    {participants.map(p => {
+                                        const pid = competition.type === 'team' ? p.team?._id : p.user?._id;
+                                        const name = competition.type === 'team' ? p.team?.name : p.user?.name;
+                                        const current = scores[pid] || {};
 
-                                    return (
-                                        <tr key={p._id} className="hover:bg-white/5 transition-colors">
-                                            <td className="p-4">
-                                                <input
-                                                    type="number"
-                                                    className="w-16 bg-black/20 border border-white/10 rounded px-2 py-1 text-white text-center focus:border-blue-500 outline-none"
-                                                    value={current.position || ''}
-                                                    onChange={(e) => handleInputChange(pid, 'position', e.target.value)}
-                                                    placeholder="#"
-                                                />
-                                            </td>
-                                            <td className="p-4">
-                                                <div className="font-medium text-white">{name}</div>
-                                            </td>
-                                            <td className="p-4">
-                                                <input
-                                                    type="number"
-                                                    className="w-24 bg-black/20 border border-white/10 rounded px-2 py-1 text-white focus:border-blue-500 outline-none"
-                                                    placeholder="Score"
-                                                    value={current.score || ''}
-                                                    onChange={(e) => handleInputChange(pid, 'score', e.target.value)}
-                                                />
-                                            </td>
-                                            <td className="p-4 text-white font-mono">{current.position || '-'}</td>
-                                            <td className="p-4 text-right">
-                                                <Button
-                                                    size="sm"
-                                                    onClick={() => handleSave(p)}
-                                                    disabled={saving === pid}
-                                                    className="bg-blue-600 hover:bg-blue-500"
-                                                >
-                                                    {saving === pid ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
-                                                </Button>
-                                            </td>
-                                        </tr>
-                                    );
-                                })}
-                            </tbody>
-                        </table>
+                                        return (
+                                            <tr key={p._id} className="hover:bg-white/5 transition-colors">
+                                                <td className="p-4">
+                                                    <input
+                                                        type="number"
+                                                        className="w-16 bg-black/20 border border-white/10 rounded px-2 py-1 text-white text-center focus:border-blue-500 outline-none"
+                                                        value={current.position || ''}
+                                                        onChange={(e) => handleInputChange(pid, 'position', e.target.value)}
+                                                        placeholder="#"
+                                                    />
+                                                </td>
+                                                <td className="p-4">
+                                                    <div className="font-medium text-white">{name}</div>
+                                                </td>
+                                                <td className="p-4">
+                                                    <input
+                                                        type="number"
+                                                        className="w-24 bg-black/20 border border-white/10 rounded px-2 py-1 text-white focus:border-blue-500 outline-none"
+                                                        placeholder="Score"
+                                                        value={current.score || ''}
+                                                        onChange={(e) => handleInputChange(pid, 'score', e.target.value)}
+                                                    />
+                                                </td>
+                                                <td className="p-4 text-white font-mono">{current.position || '-'}</td>
+                                                <td className="p-4 text-right">
+                                                    <Button
+                                                        size="sm"
+                                                        onClick={() => handleSave(p)}
+                                                        disabled={saving === pid}
+                                                        className="bg-blue-600 hover:bg-blue-500"
+                                                    >
+                                                        {saving === pid ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
+                                                    </Button>
+                                                </td>
+                                            </tr>
+                                        );
+                                    })}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
 
                     <div className="bg-yellow-500/10 border border-yellow-500/20 p-4 rounded-lg text-yellow-200 text-sm">

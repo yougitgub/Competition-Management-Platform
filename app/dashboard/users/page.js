@@ -25,46 +25,48 @@ export default async function UsersPage() {
             </div>
 
             <div className="glass-panel overflow-hidden border border-white/5">
-                <table className="w-full text-left">
-                    <thead className="bg-white/5 text-slate-300 text-sm uppercase">
-                        <tr>
-                            <th className="p-4">Name</th>
-                            <th className="p-4">Email</th>
-                            <th className="p-4">Role</th>
-                            <th className="p-4">Joined</th>
-                        </tr>
-                    </thead>
-                    <tbody className="divide-y divide-white/5">
-                        {users.map((user) => (
-                            <tr
-                                key={user._id}
-                                className="hover:bg-white/5 transition-colors group"
-                            >
-                                <td className="p-4 font-medium text-white flex items-center gap-3">
-                                    <div className="w-8 h-8 rounded-full bg-slate-700 flex items-center justify-center text-xs font-bold text-slate-300 border border-slate-600">
-                                        {user.name?.[0]?.toUpperCase() || 'U'}
-                                    </div>
-                                    {user.name}
-                                </td>
-                                <td className="p-4 text-slate-400">
-                                    <div className="flex items-center gap-2">
-                                        <Mail className="w-3 h-3" />
-                                        {user.email}
-                                    </div>
-                                </td>
-                                <td className="p-4">
-                                    <UserRoleSelect userId={user._id} currentRole={user.role} />
-                                </td>
-                                <td className="p-4 text-slate-500 text-sm">
-                                    <div className="flex items-center gap-2">
-                                        <Calendar className="w-3 h-3" />
-                                        {new Date(user.createdAt).toISOString().split('T')[0]}
-                                    </div>
-                                </td>
+                <div className="overflow-x-auto">
+                    <table className="w-full text-left">
+                        <thead className="bg-white/5 text-slate-300 text-sm uppercase">
+                            <tr>
+                                <th className="p-4">Name</th>
+                                <th className="p-4">Email</th>
+                                <th className="p-4">Role</th>
+                                <th className="p-4">Joined</th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody className="divide-y divide-white/5">
+                            {users.map((user) => (
+                                <tr
+                                    key={user._id}
+                                    className="hover:bg-white/5 transition-colors group"
+                                >
+                                    <td className="p-4 font-medium text-white flex items-center gap-3">
+                                        <div className="w-8 h-8 rounded-full bg-slate-700 flex items-center justify-center text-xs font-bold text-slate-300 border border-slate-600">
+                                            {user.name?.[0]?.toUpperCase() || 'U'}
+                                        </div>
+                                        {user.name}
+                                    </td>
+                                    <td className="p-4 text-slate-400">
+                                        <div className="flex items-center gap-2">
+                                            <Mail className="w-3 h-3" />
+                                            {user.email}
+                                        </div>
+                                    </td>
+                                    <td className="p-4">
+                                        <UserRoleSelect userId={user._id} currentRole={user.role} />
+                                    </td>
+                                    <td className="p-4 text-slate-500 text-sm">
+                                        <div className="flex items-center gap-2">
+                                            <Calendar className="w-3 h-3" />
+                                            {new Date(user.createdAt).toISOString().split('T')[0]}
+                                        </div>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     );

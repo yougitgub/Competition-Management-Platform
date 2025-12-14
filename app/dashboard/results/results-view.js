@@ -87,43 +87,45 @@ function ResultsTabContent({ competitionId, isAdmin }) {
             </div>
 
             <div className="overflow-hidden rounded-xl border border-white/5 bg-black/20">
-                <table className="w-full text-left">
-                    <thead className="bg-white/5 text-slate-300 text-sm uppercase">
-                        <tr>
-                            <th className="p-4">Rank</th>
-                            <th className="p-4">Participant</th>
-                            <th className="p-4 text-right">Score</th>
-                        </tr>
-                    </thead>
-                    <tbody className="divide-y divide-white/5">
-                        {results.map((r) => (
-                            <tr key={r._id} className="hover:bg-white/5 transition-colors group">
-                                <td className="p-4 flex items-center gap-2">
-                                    {r.position === 1 && <Trophy className="w-5 h-5 text-yellow-400" />}
-                                    {r.position === 2 && <Trophy className="w-5 h-5 text-gray-400" />}
-                                    {r.position === 3 && <Trophy className="w-5 h-5 text-amber-600" />}
-                                    <span className={clsx(
-                                        "font-mono font-bold",
-                                        r.position <= 3 ? "text-white text-lg" : "text-slate-400"
-                                    )}>
-                                        {r.position}
-                                    </span>
-                                </td>
-                                <td className="p-4 font-medium text-white">
-                                    <div className="flex flex-col">
-                                        <span>{r.team ? r.team.name : r.user?.name}</span>
-                                        <span className="text-xs text-slate-500 font-normal">{r.user?.email}</span>
-                                    </div>
-                                </td>
-                                <td className="p-4 text-right">
-                                    <span className="font-bold text-blue-400 bg-blue-400/10 px-2 py-1 rounded">
-                                        {r.score}
-                                    </span>
-                                </td>
+                <div className="overflow-x-auto">
+                    <table className="w-full text-left">
+                        <thead className="bg-white/5 text-slate-300 text-sm uppercase">
+                            <tr>
+                                <th className="p-4">Rank</th>
+                                <th className="p-4">Participant</th>
+                                <th className="p-4 text-right">Score</th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody className="divide-y divide-white/5">
+                            {results.map((r) => (
+                                <tr key={r._id} className="hover:bg-white/5 transition-colors group">
+                                    <td className="p-4 flex items-center gap-2">
+                                        {r.position === 1 && <Trophy className="w-5 h-5 text-yellow-400" />}
+                                        {r.position === 2 && <Trophy className="w-5 h-5 text-gray-400" />}
+                                        {r.position === 3 && <Trophy className="w-5 h-5 text-amber-600" />}
+                                        <span className={clsx(
+                                            "font-mono font-bold",
+                                            r.position <= 3 ? "text-white text-lg" : "text-slate-400"
+                                        )}>
+                                            {r.position}
+                                        </span>
+                                    </td>
+                                    <td className="p-4 font-medium text-white">
+                                        <div className="flex flex-col">
+                                            <span>{r.team ? r.team.name : r.user?.name}</span>
+                                            <span className="text-xs text-slate-500 font-normal">{r.user?.email}</span>
+                                        </div>
+                                    </td>
+                                    <td className="p-4 text-right">
+                                        <span className="font-bold text-blue-400 bg-blue-400/10 px-2 py-1 rounded">
+                                            {r.score}
+                                        </span>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     );
