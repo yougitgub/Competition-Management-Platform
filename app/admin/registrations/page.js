@@ -92,6 +92,6 @@ export default function AdminRegistrations() {
         )}
       </div>
     </div>
-    </Layout >
+
   );
 }
