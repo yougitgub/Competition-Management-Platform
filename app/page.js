@@ -1,8 +1,9 @@
 import Link from 'next/link';
 import { getCompetitions } from '@/actions/competition-actions';
 import { auth } from '@/auth';
-import { ArrowRight, Trophy, Users, Award, Sparkles, Zap, Target, LayoutDashboard, LogOut } from 'lucide-react';
-import { logout } from '@/actions/auth-actions';
+import { ArrowRight, Trophy, Users, Award, Zap, Target } from 'lucide-react';
+import LandingNav from '@/components/LandingNav';
+
 export default async function Home() {
   const session = await auth();
   const competitions = await getCompetitions();
@@ -17,54 +18,8 @@ export default async function Home() {
         <div className="absolute bottom-0 right-1/4 h-96 w-96 rounded-full bg-purple-500/20 blur-3xl opacity-50" />
       </div>
 
-      {/* Navbar */}
-      <nav className="relative z-10 border-b border-white/5 backdrop-blur-xl">
-        <div className="container mx-auto flex items-center justify-between p-6">
-          <div className="flex items-center gap-2">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-blue-500 to-purple-600">
-              <Sparkles className="h-6 w-6 text-white" />
-            </div>
-            <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-cyan-400 bg-clip-text text-2xl font-extrabold text-transparent">
-              CompManager
-            </span>
-          </div>
-          <div className="flex gap-3">
-            {session ? (
-              <>
-                <Link
-                  href={session.user.role === 'admin' ? '/admin/dashboard' : '/dashboard'}
-                  className="flex h-11 items-center justify-center rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 px-6 text-sm font-semibold text-white shadow-lg shadow-blue-500/30 transition-all hover:scale-105 hover:shadow-xl hover:shadow-blue-500/40"
-                >
-                  <LayoutDashboard className="mr-2 h-4 w-4" /> Dashboard
-                </Link>
-                <form action={logout}>
-                  <button
-                    type="submit"
-                    className="flex h-11 items-center justify-center rounded-xl border border-white/10 bg-white/5 px-6 text-sm font-semibold text-white backdrop-blur-sm transition-all hover:bg-white/10 hover:scale-105"
-                  >
-                    <LogOut className="mr-2 h-4 w-4" /> Logout
-                  </button>
-                </form>
-              </>
-            ) : (
-              <>
-                <Link
-                  href="/login"
-                  className="flex h-11 items-center justify-center rounded-xl border border-white/10 bg-white/5 px-6 text-sm font-semibold text-white backdrop-blur-sm transition-all hover:bg-white/10 hover:scale-105"
-                >
-                  Login
-                </Link>
-                <Link
-                  href="/register"
-                  className="flex h-11 items-center justify-center rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 px-6 text-sm font-semibold text-white shadow-lg shadow-blue-500/30 transition-all hover:scale-105 hover:shadow-xl hover:shadow-blue-500/40"
-                >
-                  Get Started
-                </Link>
-              </>
-            )}
-          </div>
-        </div>
-      </nav>
+      <LandingNav session={session} />
+
 
       {/* Hero Section */}
       <main className="relative z-10 flex-1">
