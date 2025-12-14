@@ -67,12 +67,4 @@ export async function updateUserRole(userId, newRole) {
     }
 }
 
-export async function getJudges() {
-    try {
-        await dbConnect();
-        const judges = await User.find({ role: 'judge' });
-        return JSON.parse(JSON.stringify(judges)); // Add this to simplify passing to client
-    } catch (e) {
-        return [];
-    }
-}
+

@@ -7,8 +7,8 @@ import { revalidatePath } from 'next/cache';
 
 export async function submitScore(prevState, formData) {
     const session = await auth();
-    // Ensure user is judge or admin
-    if (!session || (session.user.role !== 'judge' && session.user.role !== 'admin')) {
+    // Ensure user is admin
+    if (!session || session.user.role !== 'admin') {
         return { error: 'Unauthorized' };
     }
 

@@ -15,14 +15,9 @@ export async function submitScore(competitionId, participantId, score, position,
     await dbConnect();
 
     // Check permissions
+    // Check permissions
     if (session.user.role !== 'admin') {
-        if (session.user.role !== 'judge') return { error: 'Unauthorized' };
-
-        // Verify assignment
-        const competition = await Competition.findById(competitionId);
-        if (!competition.judges.includes(session.user.id)) {
-            return { error: 'You are not assigned to judge this competition' };
-        }
+        return { error: 'Unauthorized' };
     }
 
     try {

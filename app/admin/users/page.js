@@ -69,7 +69,7 @@ export default function AdminUsers() {
           <input placeholder={editMode ? "New Password (optional)" : "Password"} type="text" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} className="glass-input text-slate-200 placeholder-slate-500" required={!editMode} />
           <select value={form.role} onChange={(e) => setForm({ ...form, role: e.target.value })} className="glass-input text-slate-200 bg-slate-800/50">
             <option value="student">Student</option>
-            <option value="teacher">Teacher</option>
+
             <option value="admin">Admin</option>
           </select>
           <div className="md:col-span-2 flex justify-end">

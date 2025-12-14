@@ -55,7 +55,7 @@ export async function getCompetitions() {
 export async function getCompetitionById(id) {
     try {
         await dbConnect();
-        const competition = await Competition.findById(id).populate('judges', 'name email');
+        const competition = await Competition.findById(id);
         return JSON.parse(JSON.stringify(competition));
     } catch (error) {
         return null; // Handle not found gracefully
@@ -99,39 +99,7 @@ export async function updateCompetition(id, prevState, formData) {
     }
 }
 
-export async function addJudgeToCompetition(competitionId, judgeId) {
-    const session = await auth();
-    if (!session || session.user.role !== 'admin') return { error: 'Unauthorized' };
 
-    try {
-        await dbConnect();
-        const competition = await Competition.findById(competitionId);
-        if (!competition.judges.includes(judgeId)) {
-            competition.judges.push(judgeId);
-            await competition.save();
-        }
-        revalidatePath(`/dashboard/competitions/${competitionId}/judges`);
-        return { success: 'Judge added' };
-    } catch (e) {
-        return { error: 'Failed to add judge' };
-    }
-}
-
-export async function removeJudgeFromCompetition(competitionId, judgeId) {
-    const session = await auth();
-    if (!session || session.user.role !== 'admin') return { error: 'Unauthorized' };
-
-    try {
-        await dbConnect();
-        await Competition.findByIdAndUpdate(competitionId, {
-            $pull: { judges: judgeId }
-        });
-        revalidatePath(`/dashboard/competitions/${competitionId}/judges`);
-        return { success: 'Judge removed' };
-    } catch (e) {
-        return { error: 'Failed to remove judge' };
-    }
-}
 
 export async function setCompetitionStatus(id, status) {
     const session = await auth();

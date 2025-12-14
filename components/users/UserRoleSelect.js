@@ -27,7 +27,7 @@ export default function UserRoleSelect({ userId, currentRole }) {
                 className="bg-white/5 border border-white/10 rounded px-2 py-1 text-sm text-slate-300 focus:bg-slate-800 outline-none"
             >
                 <option value="student">Student</option>
-                <option value="judge">Judge</option>
+
                 <option value="admin">Admin</option>
             </select>
             {loading && <Loader2 className="w-4 h-4 animate-spin text-slate-400" />}

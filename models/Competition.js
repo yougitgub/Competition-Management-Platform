@@ -48,10 +48,7 @@ const CompetitionSchema = new mongoose.Schema({
     maxParticipants: {
         type: Number,
     },
-    judges: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-    }],
+
 }, {
     timestamps: true,
 });

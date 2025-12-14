@@ -160,14 +160,7 @@ export default async function CompetitionDetailsPage({ params }) {
                                 )
                             )}
 
-                            {/* Judge Scoring */}
-                            {session?.user?.role === 'judge' && isActive && (
-                                <Link href={`/dashboard/competitions/${id}/score`} className="block">
-                                    <Button className="w-full bg-green-600 hover:bg-green-500">
-                                        Start Scoring
-                                    </Button>
-                                </Link>
-                            )}
+
 
                             {/* Admin Actions */}
                             {session?.user?.role === 'admin' && (

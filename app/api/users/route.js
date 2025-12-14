@@ -53,7 +53,7 @@ export async function POST(req) {
       return NextResponse.json({ error: 'Missing name, email or password' }, { status: 400 });
     }
 
-    if (!['admin', 'teacher', 'student', 'judge'].includes(role || 'student')) {
+    if (!['admin', 'student'].includes(role || 'student')) {
       return NextResponse.json({ error: 'Invalid role' }, { status: 400 });
     }
 
